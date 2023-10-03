@@ -1,0 +1,29 @@
+\chapter{Introduzione}
+
+\section{Contesto}
+
+I microservizi hanno guadagnato molta popolarità nell'industria del software. Ad esempio, Netflix e Spotify sono già forniti come applicazioni basate su microservizi. Ciò è dovuto al fatto che le applicazioni basate su microservizi sono native per il cloud, il che significa che sono composte da servizi scarsamente accoppiati, che possono essere distribuiti e scalati indipendentemente per sfruttare appieno le potenzialità del cloud computing.
+Le applicazioni basate su microservizi sono spesso composte da centinaia di servizi, che vengono tipicamente replicati istanziando molteplici copie di ciascun servizio. Le molteplici istanze dei vari servizi di un'applicazione interagiscono per soddisfare le richieste degli utenti finali, potenzialmente generando migliaia di interazioni che avvengono contemporaneamente. Le istanze dei servizi possono fallire, ad esempio, restituendo risposte di errore ai loro invocatori, o non rispondendo affatto poiché si sono bloccate improvvisamente.
+Mentre le istanze di servizio che falliscono possono essere prontamente rilevate in tempo reale, comprendere le possibili cause principali di un'istanza di servizio fallita è un compito sicuramente non banale \cite{failure_root_cause_analysis}. L'istanza del servizio è fallita da sola? Oppure ha fallito in cascata perché ha interagito con un'altra istanza di servizio fallita? Quest'ultima è fallita da sola o in cascata a causa di qualche altra istanza di servizio? Rispondere a tali domande non è semplice, quando si hanno possibilmente migliaia di interazioni tra diverse istanze di servizio che avvengono in parallelo. Allo stesso tempo, rispondere alle domande sopra citate è fondamentale per adottare contromisure ed evitare che la stessa sequenza di guasti si verifichi nuovamente.
+
+\section{Obiettivo generale e contributi della tesi}
+
+L'obiettivo generale di questa tesi è di automatizzare il logging delle interazioni in ambienti Kubernetes, al fine di identificare le cause principali dei malfunzionamenti nei deployment. Tale scelta di concentrarsi su Kubernetes è stata dettata dalla sua posizione come standard de-facto per i deployment nel mondo moderno dell'IT. Il fine ultimo è legare questo processo automatizzato con yRCA\cite{yrca}, uno strumento in grado di determinare la radice degli errori a partire dai log raccolti. yRCA, analizzando i log prodotti dai vari microservizi, è in grado di spiegare i fallimenti di un microservizio, determinando se questi siano causati da un errore interno del microservizio stesso, o se siano dovuti ad una cascata di fallimenti radicata in altri microservizi.
+
+I contributi della tesi sono:
+
+
+\begin{itemize}
+    \item \textbf{Progettazione di una metodologia di logging:} Creazione di una metodologia per sistematizzare l'acquisizione, l'aggregazione e l'elaborazione dei log in deployment basati su Kubernetes.
+    
+    \item \textbf{Implementazione della metodologia:} Realizzazione di un prototipo della metodologia in grado di manipolare i file di un deployment in Kubernetes, inserendo automaticamente i componenti necessari per realizzare la raccolta dei log secondo la metodologia proposta.
+    
+    \item \textbf{Sperimentazione:} Esecuzione di esperimenti controllati, basati su applicazioni esistenti e volti a valutare se e come la metodologia proposta sia in grado di automatizzare l'acquisizione dei log necessari a yRCA.
+
+
+\end{itemize}
+
+
+\section{Struttura della Tesi}
+
+Questa tesi è organizzata in sei capitoli. Dopo questa introduzione, il Capitolo 2 fornisce le conoscenze di base per comprendere il resto della tesi. Il Capitolo 3 descrive la progettazione della soluzione proposta. Il Capitolo 4 descrive l'implementazione che consente di automatizzare il processo di configurazione di Kubernetes. Il Capitolo 5 illustra il testing della soluzione proposta, commentandone l'efficacia quando applicata ad un'applicazione esistente. Il Capitolo 6 conclude la tesi, riepilogando i contributi della stessa e discutendone possibili sviluppi futuri.
